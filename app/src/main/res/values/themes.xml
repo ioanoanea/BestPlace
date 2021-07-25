@@ -16,8 +16,8 @@
     
     <style name="SearchViewStyle" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <!-- Text color -->
-        <item name="android:editTextColor">@color/white</item>
+        <item name="android:editTextColor">@color/light_grey</item>
         <!-- Hint text color -->
-        <item name="android:textColorHint">@color/light_grey</item>
+        <item name="android:textColorHint">@color/grey_1</item>
     </style>
 </resources>
