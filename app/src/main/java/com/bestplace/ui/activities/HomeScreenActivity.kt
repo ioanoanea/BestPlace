@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.bestplace.R
-import com.bestplace.data.model.Location
 import com.bestplace.data.repository.FirebaseRepository
-import com.bestplace.data.repository.LocationRepository
+import com.bestplace.data.repository.PlaceRepository
 import com.bestplace.ui.fragments.CategoriesFragment
-import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -22,16 +20,15 @@ class HomeScreenActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.container, CategoriesFragment()).commit()
 
         val executorService: ExecutorService = Executors.newFixedThreadPool(4)
+        val placeRepository = PlaceRepository(executorService)
 
-        val locationRepository = LocationRepository(executorService)
-
-        locationRepository.getById("2") { result ->
-            when(result) {
-                is FirebaseRepository.Result.Success<Location> ->
-                    if (result.data != null){
-                        Toast.makeText(this, result.data.latitude.toString(), Toast.LENGTH_SHORT).show()
+        placeRepository.searchByCategory("car") { result ->
+            when (result) {
+                is FirebaseRepository.Result.Success ->
+                    if (result.data != null) {
+                        Toast.makeText(this, "${result.data.size}", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this, "Not Found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Not found", Toast.LENGTH_SHORT).show()
                     }
                 else ->
                     Toast.makeText(this, result.toString(), Toast.LENGTH_SHORT).show()

@@ -5,7 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.Executor
 
-abstract class FirebaseRepository(
+open class FirebaseRepository(
     private val collectionName: String,
     val executor: Executor
 ) {

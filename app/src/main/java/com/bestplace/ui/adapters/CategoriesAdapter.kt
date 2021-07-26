@@ -18,6 +18,7 @@ class CategoriesAdapter(private val items: Array<Item>): RecyclerView.Adapter<Ca
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.category_card, parent, false)
+        // update view layout size
         view.layoutParams = ViewGroup.LayoutParams(parent.width / 2, parent.width / 2)
         return CategoriesViewHolder(view)
     }

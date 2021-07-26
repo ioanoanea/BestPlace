@@ -10,13 +10,12 @@ class LocationRepository(executor: Executor): FirebaseRepository("locations", ex
      * @param id String
      * @param callback Function1<Result<Location>, Unit>
      */
-    fun getById(
-        id: String,
-        callback: (Result<Location>) -> Unit
-    ) {
+    fun getById(id: String, callback: (Result<Location>) -> Unit) {
         // execute query in background
         executor.execute {
-            getCollectionReference().document(id).get()
+            getCollectionReference()
+                .document(id)
+                .get()
                 .addOnSuccessListener { result ->
                     if (result.exists()) {
                         // get location details
