@@ -26,6 +26,7 @@
             android:elevation="8dp"
             android:paddingHorizontal="5dp"
             android:theme="@style/SearchViewStyle"
+            app:queryBackground="@null"
             app:iconifiedByDefault="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -19,8 +19,8 @@ class LocationRepository(executor: Executor): FirebaseRepository("locations", ex
                 .addOnSuccessListener { result ->
                     if (result.exists()) {
                         // get location details
-                        val latitude = "${result.get("latitude")}".toLong()
-                        val longitude = "${result.get("longitude")}".toLong()
+                        val latitude = "${result.get("latitude")}".toDouble()
+                        val longitude = "${result.get("longitude")}".toDouble()
 
                         callback(Result.Success(Location(latitude, longitude)))
                     } else {

@@ -12,7 +12,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:elevation="8dp"
-        android:background="@drawable/category_card_background"
+        android:background="@drawable/item_card_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

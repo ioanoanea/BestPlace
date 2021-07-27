@@ -31,7 +31,7 @@ class CategoriesFragment : Fragment() {
 
         val list = arrayOf(
             CategoriesAdapter.Item(R.drawable.ic_tourist_spots, "Tourist spots"),
-            CategoriesAdapter.Item(R.drawable.ic_food, "food"),
+            CategoriesAdapter.Item(R.drawable.ic_food, "Food"),
             CategoriesAdapter.Item(R.drawable.ic_hotel, "Hotel"),
             CategoriesAdapter.Item(R.drawable.ic_car_wash, "Car wash"),
             CategoriesAdapter.Item(R.drawable.ic_shopping, "Shopping"),

@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.bestplace.R
+import com.bestplace.data.model.Place
 import com.bestplace.data.repository.FirebaseRepository
-import com.bestplace.data.repository.PlaceRepository
+import com.bestplace.data.viewModel.OnUpdateListener
+import com.bestplace.data.viewModel.PlaceListViewModel
 import com.bestplace.ui.fragments.CategoriesFragment
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+
 
 class HomeScreenActivity : AppCompatActivity() {
 
@@ -19,21 +20,35 @@ class HomeScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home_screen)
         supportFragmentManager.beginTransaction().add(R.id.container, CategoriesFragment()).commit()
 
-        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-        val placeRepository = PlaceRepository(executorService)
+        val placeListViewModel = PlaceListViewModel()
 
-        placeRepository.searchByCategory("car") { result ->
-            when (result) {
-                is FirebaseRepository.Result.Success ->
-                    if (result.data != null) {
-                        Toast.makeText(this, "${result.data.size}", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Not found", Toast.LENGTH_SHORT).show()
-                    }
-                else ->
-                    Toast.makeText(this, result.toString(), Toast.LENGTH_SHORT).show()
+        placeListViewModel.setOnUpdateListener(object: OnUpdateListener {
+            override fun onUpdate() {
+                for (place in placeListViewModel.places) {
+                    Toast.makeText(
+                        this@HomeScreenActivity,
+                        "name: " + place.name + "\n" +
+                        "location id: " + place.locationId + "\n" +
+                        "description: " + place.description + "\n" +
+                        "category: " + place.category,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
-        }
+
+            override fun onNullResult() {
+                Toast.makeText(this@HomeScreenActivity,
+                    "Nothing was found", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(e: FirebaseRepository.Result<MutableList<Place>>) {
+                Toast.makeText(this@HomeScreenActivity,
+                    e.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+        placeListViewModel.searchByName("te")
     }
 
 }
