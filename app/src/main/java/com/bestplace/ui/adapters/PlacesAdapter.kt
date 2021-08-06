@@ -8,7 +8,7 @@ import com.bestplace.data.model.Place
 import com.bestplace.ui.viewHolders.NotFoundViewHolder
 import com.bestplace.ui.viewHolders.PlaceViewHolder
 
-class PlacesAdapter(private val items: Array<Place>):
+class PlacesAdapter(var items: MutableList<Place>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -17,7 +17,7 @@ class PlacesAdapter(private val items: Array<Place>):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == VIEW_TYPE_ONE) {
+        return if (getItemViewType() == VIEW_TYPE_ONE) {
             PlaceViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.place_card, parent, false)
@@ -31,9 +31,9 @@ class PlacesAdapter(private val items: Array<Place>):
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == VIEW_TYPE_ONE) {
+        if (getItemViewType() == VIEW_TYPE_ONE) {
             (holder as PlaceViewHolder).title.text = items[position].name
-            (holder as PlaceViewHolder).description.text = items[position].description
+            holder.description.text = items[position].description
         } else {
             (holder as NotFoundViewHolder)
         }
@@ -43,7 +43,7 @@ class PlacesAdapter(private val items: Array<Place>):
         return items.size
     }
 
-    override fun getItemViewType(position: Int): Int {
+    fun getItemViewType(): Int {
         return if (items.isEmpty()) {
             VIEW_TYPE_TWO
         } else {

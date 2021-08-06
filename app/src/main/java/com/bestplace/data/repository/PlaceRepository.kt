@@ -44,7 +44,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
     }
 
     /**
-     * Search places by category
+     * Get places by category
      * @param str String
      * @param callback Function1<Result<MutableList<Place>>, Unit>
      */

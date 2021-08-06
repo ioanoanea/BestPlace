@@ -4,51 +4,51 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import com.bestplace.R
 import com.bestplace.data.model.Place
-import com.bestplace.data.repository.FirebaseRepository
-import com.bestplace.data.viewModel.OnUpdateListener
 import com.bestplace.data.viewModel.PlaceListViewModel
 import com.bestplace.ui.fragments.CategoriesFragment
 
 
 class HomeScreenActivity : AppCompatActivity() {
 
+    private val placeListViewModel: PlaceListViewModel by viewModels()
+    private lateinit var searchBox: androidx.appcompat.widget.SearchView
+
     @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
-        supportFragmentManager.beginTransaction().add(R.id.container, CategoriesFragment()).commit()
 
-        val placeListViewModel = PlaceListViewModel()
+        setViews()
 
-        placeListViewModel.setOnUpdateListener(object: OnUpdateListener {
-            override fun onUpdate() {
-                for (place in placeListViewModel.places) {
-                    Toast.makeText(
-                        this@HomeScreenActivity,
-                        "name: " + place.name + "\n" +
-                        "location id: " + place.locationId + "\n" +
-                        "description: " + place.description + "\n" +
-                        "category: " + place.category,
-                        Toast.LENGTH_SHORT
-                    ).show()
+        supportFragmentManager.beginTransaction().replace(R.id.container, CategoriesFragment()).commit()
+
+        searchBox.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    placeListViewModel.search(newText)
                 }
+                return true
             }
-
-            override fun onNullResult() {
-                Toast.makeText(this@HomeScreenActivity,
-                    "Nothing was found", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onError(e: FirebaseRepository.Result<MutableList<Place>>) {
-                Toast.makeText(this@HomeScreenActivity,
-                    e.toString(), Toast.LENGTH_SHORT).show()
-            }
-
         })
 
-        placeListViewModel.searchByName("te")
+        val placesObserver = Observer<MutableList<Place>> {places ->
+            Toast.makeText(this, "${places.size}", Toast.LENGTH_SHORT).show()
+        }
+
+        placeListViewModel.getPlaces().observe(this, placesObserver)
+
     }
 
+    private fun setViews() {
+        this.searchBox = findViewById(R.id.search_box)
+    }
 }
