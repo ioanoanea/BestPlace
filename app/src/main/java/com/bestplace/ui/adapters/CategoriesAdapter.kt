@@ -11,7 +11,8 @@ class CategoriesAdapter(private val items: Array<Item>): RecyclerView.Adapter<Ca
     // item class
     data class Item (
         val icon: Int,
-        val title: String
+        val title: String,
+        val onClick: (() -> Unit)? = null
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -26,6 +27,9 @@ class CategoriesAdapter(private val items: Array<Item>): RecyclerView.Adapter<Ca
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.categoryTitle.text = items[position].title
         holder.categoryIcon.setImageResource(items[position].icon)
+        holder.itemView.setOnClickListener {
+            items[position].onClick?.invoke()
+        }
     }
 
     override fun getItemCount(): Int {

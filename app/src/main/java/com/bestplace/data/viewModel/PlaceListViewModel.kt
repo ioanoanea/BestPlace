@@ -37,6 +37,8 @@ class PlaceListViewModel: ViewModel() {
      * @param str String
      */
     fun search(str: String) {
+        // clear old data
+        places.value?.clear()
         if (str != "") {
             // call repository search by name
             placeRepository.searchByName(str) { nameSearchResult ->
@@ -59,18 +61,43 @@ class PlaceListViewModel: ViewModel() {
                                         list.addAll(categorySearchResult.data)
                                     }
 
-                                    // set new value to places list
+                                    // set new value for place list
                                     places.value = list
                                 }
-                                else -> throw Exception("Error: Something went wrong!")
+                                else ->
+                                    throw Exception("Error: Something went wrong!")
                             }
                         }
                     }
-                    else -> throw Exception("Error: Something went wrong!")
+                    else ->
+                        throw Exception("Error: Something went wrong!")
                 }
             }
         }
     }
 
+    /**
+     * Get all places by category
+     * @param strCategory String
+     */
+    fun getByCategory(strCategory: String) {
+        // clear old data
+        places.value?.clear()
+        if (strCategory != "") {
+            // call repository search by category
+            placeRepository.searchByCategory(strCategory) { result ->
+                when (result) {
+                    is FirebaseRepository.Result.Success<MutableList<Place>> -> {
+                        if (result.data != null) {
+                            // set new value for place list
+                            places.value = result.data
+                        }
+                    }
+                    else ->
+                        throw Exception("Error: Something went wrong!")
+                }
+            }
+        }
+    }
 
 }

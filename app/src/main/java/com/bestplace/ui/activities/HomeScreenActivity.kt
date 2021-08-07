@@ -34,17 +34,11 @@ class HomeScreenActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
-                    placeListViewModel.search(newText)
+                    placeListViewModel.getByCategory(newText)
                 }
                 return true
             }
         })
-
-        val placesObserver = Observer<MutableList<Place>> {places ->
-            Toast.makeText(this, "${places.size}", Toast.LENGTH_SHORT).show()
-        }
-
-        placeListViewModel.getPlaces().observe(this, placesObserver)
 
     }
 

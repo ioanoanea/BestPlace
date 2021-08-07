@@ -1,41 +1,33 @@
 package com.bestplace.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bestplace.R
 import com.bestplace.data.model.Place
-import com.bestplace.ui.viewHolders.NotFoundViewHolder
 import com.bestplace.ui.viewHolders.PlaceViewHolder
 
-class PlacesAdapter(var items: MutableList<Place>):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlacesAdapter(private var items: MutableList<Item>): RecyclerView.Adapter<PlaceViewHolder>() {
 
-    companion object {
-        const val VIEW_TYPE_ONE = 1
-        const val VIEW_TYPE_TWO = 2
+    // item class
+    data class Item(
+        val place: Place,
+        val onClick: (() -> Unit)? = null
+    );
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
+        // Create a new view, which defines the UI of the list item
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.place_card, parent, false)
+        return PlaceViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (getItemViewType() == VIEW_TYPE_ONE) {
-            PlaceViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.place_card, parent, false)
-            )
-        } else {
-            NotFoundViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.not_found_card, parent, false)
-            )
-        }
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType() == VIEW_TYPE_ONE) {
-            (holder as PlaceViewHolder).title.text = items[position].name
-            holder.description.text = items[position].description
-        } else {
-            (holder as NotFoundViewHolder)
+    override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
+        holder.title.text = items[position].place.name
+        holder.description.text = items[position].place.description
+        holder.itemView.setOnClickListener {
+            items[position].onClick?.invoke()
         }
     }
 
@@ -43,11 +35,13 @@ class PlacesAdapter(var items: MutableList<Place>):
         return items.size
     }
 
-    fun getItemViewType(): Int {
-        return if (items.isEmpty()) {
-            VIEW_TYPE_TWO
-        } else {
-            VIEW_TYPE_ONE
-        }
+    /**
+     * Update items list
+     * @param items MutableList<Item>
+     */
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(items: MutableList<Item>) {
+        this.items = items
+        this.notifyDataSetChanged()
     }
 }
