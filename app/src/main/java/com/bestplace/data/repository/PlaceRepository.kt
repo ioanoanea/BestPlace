@@ -26,9 +26,11 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val name = "${document.data["name"]}"
                             val description = "${document.data["description"]}"
                             val category = "${document.data["category"]}"
+                            val address = "${document.data["address"]}"
+                            val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(locationId, name, description, category)
+                            val place = Place(locationId, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))
@@ -65,9 +67,11 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val name = "${document.data["name"]}"
                             val description = "${document.data["description"]}"
                             val category = "${document.data["category"]}"
+                            val address = "${document.data["address"]}"
+                            val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(locationId, name, description, category)
+                            val place = Place(locationId, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))

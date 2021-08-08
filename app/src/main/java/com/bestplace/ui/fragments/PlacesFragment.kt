@@ -39,7 +39,7 @@ class PlacesFragment : Fragment() {
         setViews()
 
         // set recyclerView adapter
-        placesAdapter = PlacesAdapter(items)
+        placesAdapter = PlacesAdapter(context, items)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = placesAdapter
 
@@ -62,8 +62,9 @@ class PlacesFragment : Fragment() {
                 Toast.makeText(
                     context,
                     "name: ${item.name} \n" +
-                         "category: ${item.category}" +
-                         "description: ${item.description}",
+                         "category: ${item.category} \n" +
+                         "description: ${item.description} \n" +
+                         "picture: ${item.picture} \n",
                     Toast.LENGTH_SHORT
                 ).show()
             })
