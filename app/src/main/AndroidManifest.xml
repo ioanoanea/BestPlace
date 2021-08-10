@@ -3,6 +3,9 @@
     package="com.bestplace">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BestPlace">
 
-        <activity android:name=".ui.activities.HomeScreenActivity">
+    <activity android:name=".ui.activities.HomeScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

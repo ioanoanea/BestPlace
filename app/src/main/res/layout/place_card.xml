@@ -109,7 +109,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp"
-            android:text="4.8 Km"
+            android:text="0 Km"
             android:textColor="@color/light_grey"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"

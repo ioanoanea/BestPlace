@@ -16,13 +16,9 @@ class PlaceListViewModel: ViewModel() {
     private val places: MutableLiveData<MutableList<Place>> by lazy {
         MutableLiveData<MutableList<Place>>()
     }
+    private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
     // place repository
-    private val placeRepository: PlaceRepository
-
-    init {
-        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-        this.placeRepository = PlaceRepository(executorService)
-    }
+    private val placeRepository: PlaceRepository = PlaceRepository(executorService)
 
     /**
      * Return places list
