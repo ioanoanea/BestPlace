@@ -39,24 +39,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <RatingBar
-            android:id="@+id/rating_bar"
-            android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:max="5"
-            android:rating="3.5"
-            android:scaleX=".5"
-            android:scaleY=".5"
-            android:stepSize="0.5"
-            android:transformPivotX="0dp"
-            android:transformPivotY="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_View" />
-
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -77,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:text="Test location description"
             android:textColor="@color/grey_1"
@@ -92,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:text="Str. M. Eminescu, nr. 9"
             android:textColor="@color/grey_2"
@@ -107,13 +89,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:text="0 Km"
             android:textColor="@color/light_grey"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/rating_bar"
+            app:layout_constraintStart_toEndOf="@+id/card_View"
             app:layout_constraintTop_toBottomOf="@+id/address"
             app:layout_constraintVertical_bias="1.0" />
 

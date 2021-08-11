@@ -1,4 +1,5 @@
 package com.bestplace.data.repository
+import com.bestplace.data.model.Location
 import com.bestplace.data.model.Place
 import java.util.concurrent.Executor
 
@@ -22,7 +23,9 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                         val items = mutableListOf<Place>()
                         // get documents details
                         for (document in result) {
-                            val locationId = "${document.data["location_id"]}"
+                            // get place data
+                            val latitude = "${document.data["latitude"]}".toDouble()
+                            val longitude = "${document.data["longitude"]}".toDouble()
                             val name = "${document.data["name"]}"
                             val description = "${document.data["description"]}"
                             val category = "${document.data["category"]}"
@@ -30,7 +33,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(locationId, name, description, category, address, picture)
+                            val place = Place(latitude, longitude, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))
@@ -63,7 +66,9 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                         val items = mutableListOf<Place>()
                         // get documents details
                         for (document in result) {
-                            val locationId = "${document.data["location_id"]}"
+                            // get place data
+                            val latitude = "${document.data["latitude"]}".toDouble()
+                            val longitude = "${document.data["longitude"]}".toDouble()
                             val name = "${document.data["name"]}"
                             val description = "${document.data["description"]}"
                             val category = "${document.data["category"]}"
@@ -71,7 +76,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(locationId, name, description, category, address, picture)
+                            val place = Place(latitude, longitude, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))

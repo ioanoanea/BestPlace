@@ -11,31 +11,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class TestRepository {
-    @Test
-    fun testLocationRepository() {
-        val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-        val locationRepository = LocationRepository(executorService)
-
-        // try to get existing location
-        locationRepository.getById("test") { result ->
-            when (result) {
-                is FirebaseRepository.Result.Success<Location> ->
-                    assertNotNull(result.data)
-                else ->
-                    assertTrue(result is Exception)
-            }
-        }
-
-        // try to get non existing location
-        locationRepository.getById("no-existing") { result ->
-            when (result) {
-                is FirebaseRepository.Result.Success<Location> ->
-                    assertNull(result.data)
-                else ->
-                    assertTrue(result is Exception)
-            }
-        }
-    }
 
     @Test
     fun testPlaceRepository() {

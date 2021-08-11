@@ -1,8 +1,8 @@
 package com.bestplace.data.model
 
-data class Location (
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
+open class Location (
+    open val latitude: Double? = null,
+    open val longitude: Double? = null,
 ) {
     /**
      * Get distance from this location to a given location
@@ -14,12 +14,12 @@ data class Location (
         val locationB = android.location.Location("location B")
 
         // set location A coordinates to this location coordinates
-        locationA.latitude = this.latitude
-        locationA.longitude = this.longitude
+        locationA.latitude = this.latitude!!
+        locationA.longitude = this.longitude!!
 
         // set location B coordinates to received location coordinates
-        locationB.latitude = location.latitude
-        locationB.longitude = location.longitude
+        locationB.latitude = location.latitude!!
+        locationB.longitude = location.longitude!!
 
         return locationA.distanceTo(locationB)
 

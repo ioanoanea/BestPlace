@@ -38,42 +38,66 @@ class CategoriesFragment : Fragment() {
         val list = arrayOf(
             CategoriesAdapter.Item(R.drawable.ic_tourist_spots, "Tourist spots", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("Tourist spots")
+                try {
+                    placeListViewModel.getByCategory("tourist spots")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
             }),
             CategoriesAdapter.Item(R.drawable.ic_food, "Food", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("food")
+                try {
+                    placeListViewModel.getByCategory("food")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
             }),
             CategoriesAdapter.Item(R.drawable.ic_hotel, "Hotel", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("hotel")
+                try {
+                    placeListViewModel.getByCategory("hotel")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
             }),
             CategoriesAdapter.Item(R.drawable.ic_car_wash, "Car wash", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("car wash")
+                try {
+                    placeListViewModel.getByCategory("car wash")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
             }),
             CategoriesAdapter.Item(R.drawable.ic_shopping, "Shopping", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("shopping")
+                try {
+                    placeListViewModel.getByCategory("shopping")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
             }),
             CategoriesAdapter.Item(R.drawable.ic_cinema, "Cinema", onClick = {
                 // call placeListViewModel get by category
-                placeListViewModel.getByCategory("cinema")
+                try {
+                    placeListViewModel.getByCategory("cinema")
+                } catch (exception: Exception) {
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+                }
                 // change container fragment with places fragment
                 fragmentManager?.beginTransaction()?.replace(R.id.container, PlacesFragment())
                     ?.addToBackStack(null)?.commit()
