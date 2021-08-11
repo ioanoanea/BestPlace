@@ -1,5 +1,6 @@
 package com.bestplace.ui.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,17 +10,24 @@ import com.bestplace.data.model.Location
 import com.bestplace.data.model.Place
 import com.bestplace.ui.viewHolders.PlaceViewHolder
 import com.bumptech.glide.Glide
+import android.location.LocationListener
+
 
 class PlacesAdapter(
     private val context: Context? = null,
-    private var items: MutableList<Item>
-    ): RecyclerView.Adapter<PlaceViewHolder>() {
+    private var items: MutableList<Item>,
+    private var currentLocation: Location? = null
+): RecyclerView.Adapter<PlaceViewHolder>() {
 
     // item class
     data class Item(
         val place: Place,
-        val onClick: (() -> Unit)? = null
+        val onClick: (() -> Unit)? = null,
     );
+
+    private val mLocationListener: LocationListener = LocationListener {
+        TODO("Not yet implemented")
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         // Create a new view, which defines the UI of the list item
@@ -33,7 +41,7 @@ class PlacesAdapter(
         holder.title.text = items[position].place.name
         holder.description.text = items[position].place.description
         holder.address.text = items[position].place.address
-        holder.distance.text = items[position].place.getDistance(Location(1.32432, 5.4546)).toString()
+        holder.distance.text = currentLocation?.let { items[position].place.getDistance(it).toString() }
         // load header image
         if (context != null) {
             Glide.with(context)
@@ -65,5 +73,17 @@ class PlacesAdapter(
      */
     fun clearItems() {
         this.items.clear()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(items: MutableList<Item>) {
+        this.items = items
+        this.notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateLocation(location: Location) {
+        this.currentLocation = location
+        this.notifyDataSetChanged()
     }
 }

@@ -11,8 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bestplace.R
+import com.bestplace.data.model.Location
 import com.bestplace.data.model.Place
+import com.bestplace.data.viewModel.LocationViewModel
 import com.bestplace.data.viewModel.PlaceListViewModel
+import com.bestplace.ui.activities.HomeScreenActivity
 import com.bestplace.ui.adapters.PlacesAdapter
 
 
@@ -21,7 +24,9 @@ class PlacesFragment: Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var placesAdapter: PlacesAdapter
     private val placeListViewModel: PlaceListViewModel by activityViewModels()
+    private val locationViewModel: LocationViewModel by activityViewModels()
     private val items: MutableList<PlacesAdapter.Item> = mutableListOf()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +51,13 @@ class PlacesFragment: Fragment() {
             updateItems(places)
         }
         placeListViewModel.getPlaces().observe(viewLifecycleOwner, placesObserver)
+
+
+        // get current location observer
+        val locationObserver = Observer<Location> { location ->
+            placesAdapter.updateLocation(location)
+        }
+        locationViewModel.getCurrentLocation().observe(viewLifecycleOwner, locationObserver)
     }
 
     /**
@@ -60,7 +72,8 @@ class PlacesFragment: Fragment() {
      * @param items MutableList<Place>
      */
     private fun updateItems(items: MutableList<Place>) {
-        this.placesAdapter.clearItems()
+        // list with new items
+        val newItems = mutableListOf<PlacesAdapter.Item>()
         for (item in items) {
             // new item
             val newItem = PlacesAdapter.Item(item, onClick = {
@@ -75,8 +88,9 @@ class PlacesFragment: Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             })
-            // add new item
-            this.placesAdapter.addItem(newItem)
+            newItems.add(newItem)
         }
+        // update places adapter items list
+        this.placesAdapter.updateItems(newItems)
     }
 }

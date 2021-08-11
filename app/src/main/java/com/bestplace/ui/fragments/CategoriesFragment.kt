@@ -15,6 +15,10 @@ import com.bestplace.R
 import com.bestplace.data.model.Place
 import com.bestplace.data.viewModel.PlaceListViewModel
 import com.bestplace.ui.adapters.CategoriesAdapter
+import android.location.LocationListener
+
+
+
 
 
 class CategoriesFragment : Fragment() {
