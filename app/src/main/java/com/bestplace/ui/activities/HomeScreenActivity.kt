@@ -37,34 +37,10 @@ class HomeScreenActivity : AppCompatActivity() {
         // set fragment as Categories Fragment
         supportFragmentManager.beginTransaction().replace(R.id.container, CategoriesFragment()).commit()
 
-        /*
-        // get location
+        // fused location client provider setup
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    val currentLocation = com.bestplace.data.model.Location(location.latitude, location.longitude)
-                    locationViewModel.setLocation(currentLocation)
-                }
-            }
-         */
-
-        locationViewModel.setLocation(com.bestplace.data.model.Location(1.34435435, 5.43544354))
+        // get current location
+        fetchLocation()
 
         // set search box on query text listener
         searchBox.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -96,7 +72,41 @@ class HomeScreenActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Set layout views
+     */
     private fun setViews() {
         this.searchBox = findViewById(R.id.search_box)
+    }
+
+    /**
+     * Check location permission
+     */
+    private fun checkLocationPermission() {
+        // check if location permission is granted
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        != PackageManager.PERMISSION_GRANTED &&
+        ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        != PackageManager.PERMISSION_GRANTED) {
+            // request location permission
+            ActivityCompat.requestPermissions(this, arrayOf(
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ), 101)
+        }
+    }
+
+    /**
+     * Get current location
+     */
+    private fun fetchLocation() {
+        checkLocationPermission()
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    locationViewModel.setLocation(com.bestplace.data.model.Location(location.latitude, location.longitude))
+                }
+            }
+
     }
 }

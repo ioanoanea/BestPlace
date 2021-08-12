@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BestPlace">
 
-    <activity android:name=".ui.activities.HomeScreenActivity">
+        <activity android:name=".ui.activities.HomeScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

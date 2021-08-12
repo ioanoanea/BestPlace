@@ -1,5 +1,7 @@
 package com.bestplace.data.model
 
+import kotlin.math.round
+
 open class Location (
     open val latitude: Double? = null,
     open val longitude: Double? = null,
@@ -21,7 +23,7 @@ open class Location (
         locationB.latitude = location.latitude!!
         locationB.longitude = location.longitude!!
 
-        return locationA.distanceTo(locationB)
+        return round(locationA.distanceTo(locationB) / 100) / 10
 
     }
 }
