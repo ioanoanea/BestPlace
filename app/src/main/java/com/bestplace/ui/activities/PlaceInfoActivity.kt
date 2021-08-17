@@ -2,6 +2,7 @@ package com.bestplace.ui.activities
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.webkit.WebView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +34,7 @@ class PlaceInfoActivity : AppCompatActivity() {
     private lateinit var address: TextView
     private lateinit var distance: TextView
     private lateinit var openInMaps: TextView
+    private lateinit var webView: WebView
     // location client
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -67,6 +69,9 @@ class PlaceInfoActivity : AppCompatActivity() {
                 this.distance.text = "${place.getDistance(location)}"
             }
             locationViewModel.getCurrentLocation().observe(this, locationObserver)
+
+            // set webView
+            this.webView.loadUrl("https://www.cinemacity.ro/cinemas/baia-mare/1809#/buy-tickets-by-cinema?in-cinema=1809&at=2021-08-17&view-mode=list")
         }
         placeViewModel.getPlace().observe(this, placeObserver)
 
@@ -90,6 +95,7 @@ class PlaceInfoActivity : AppCompatActivity() {
         this.address = findViewById(R.id.address)
         this.distance = findViewById(R.id.distance)
         this.openInMaps = findViewById(R.id.open_in_maps_btn)
+        this.webView = findViewById(R.id.web_view)
     }
 
     /**
