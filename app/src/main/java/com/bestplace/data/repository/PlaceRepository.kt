@@ -1,9 +1,45 @@
 package com.bestplace.data.repository
-import com.bestplace.data.model.Location
 import com.bestplace.data.model.Place
 import java.util.concurrent.Executor
 
 class PlaceRepository(executor: Executor) : FirebaseRepository("places", executor) {
+
+    /**
+     * Returns place with a
+     * @param strId String
+     * @param callback Function1<Result<Place>, Unit>
+     */
+    fun getById(strId: String, callback: (Result<Place>) -> Unit) {
+        // execute query in background
+        executor.execute {
+            getCollectionReference()
+                .document(strId)
+                .get()
+                .addOnSuccessListener { result ->
+                    if (result.exists()) {
+                        // get place data
+                        val id = result.id
+                        val name = "${result.get("name")}"
+                        val category = "${result.get("category")}"
+                        val description = "${result.get("description")}"
+                        val address = "${result.get("address")}"
+                        val latitude = "${result.get("latitude")}".toDouble()
+                        val longitude = "${result.get("longitude")}".toDouble()
+                        val picture = "${result.get("picture")}"
+
+                        val place = Place(id, latitude, longitude, name, description, category, address, picture)
+                        // callback success result
+                        callback(Result.Success(place))
+                    } else {
+                        // callback null result
+                        callback(Result.Success(null))
+                    }
+                }
+                .addOnFailureListener {
+                    callback(Result.Error(it))
+                }
+        }
+    }
 
     /**
      * Search places by name
@@ -24,6 +60,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                         // get documents details
                         for (document in result) {
                             // get place data
+                            val id = document.id
                             val latitude = "${document.data["latitude"]}".toDouble()
                             val longitude = "${document.data["longitude"]}".toDouble()
                             val name = "${document.data["name"]}"
@@ -33,7 +70,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(latitude, longitude, name, description, category, address, picture)
+                            val place = Place(id, latitude, longitude, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))
@@ -67,6 +104,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                         // get documents details
                         for (document in result) {
                             // get place data
+                            val id = document.id
                             val latitude = "${document.data["latitude"]}".toDouble()
                             val longitude = "${document.data["longitude"]}".toDouble()
                             val name = "${document.data["name"]}"
@@ -76,7 +114,7 @@ class PlaceRepository(executor: Executor) : FirebaseRepository("places", executo
                             val picture = "${document.data["picture"]}"
 
                             // add new place to item list
-                            val place = Place(latitude, longitude, name, description, category, address, picture)
+                            val place = Place(id, latitude, longitude, name, description, category, address, picture)
                             items.add(place)
                         }
                         callback(Result.Success(items))

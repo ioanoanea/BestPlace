@@ -20,4 +20,5 @@
         <!-- Hint text color -->
         <item name="android:textColorHint">@color/grey_1</item>
     </style>
+
 </resources>

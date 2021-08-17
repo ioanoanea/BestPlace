@@ -1,11 +1,9 @@
 package com.bestplace.ui.activities
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +20,12 @@ import com.google.android.gms.location.LocationServices
 
 class HomeScreenActivity : AppCompatActivity() {
 
+    // viewModels
     private val placeListViewModel: PlaceListViewModel by viewModels()
     private val locationViewModel: LocationViewModel by viewModels()
+    // view
     private lateinit var searchBox: androidx.appcompat.widget.SearchView
+    // location client
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     @SuppressLint("ShowToast")
@@ -104,7 +105,7 @@ class HomeScreenActivity : AppCompatActivity() {
             .addOnSuccessListener { location : Location? ->
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
-                    locationViewModel.setLocation(com.bestplace.data.model.Location(location.latitude, location.longitude))
+                    locationViewModel.setLocation(com.bestplace.data.model.Location(null, location.latitude, location.longitude))
                 }
             }
 

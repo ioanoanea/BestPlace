@@ -3,6 +3,7 @@ package com.bestplace.data.model
 import kotlin.math.round
 
 open class Location (
+    open val id: String? = null,
     open val latitude: Double? = null,
     open val longitude: Double? = null,
 ) {

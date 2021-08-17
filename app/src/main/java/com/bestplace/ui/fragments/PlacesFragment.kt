@@ -1,10 +1,10 @@
 package com.bestplace.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -15,7 +15,7 @@ import com.bestplace.data.model.Location
 import com.bestplace.data.model.Place
 import com.bestplace.data.viewModel.LocationViewModel
 import com.bestplace.data.viewModel.PlaceListViewModel
-import com.bestplace.ui.activities.HomeScreenActivity
+import com.bestplace.ui.activities.PlaceInfoActivity
 import com.bestplace.ui.adapters.PlacesAdapter
 
 
@@ -77,16 +77,9 @@ class PlacesFragment: Fragment() {
         for (item in items) {
             // new item
             val newItem = PlacesAdapter.Item(item, onClick = {
-                Toast.makeText(
-                    context,
-                    "name: ${item.name} \n" +
-                    "category: ${item.category} \n" +
-                    "description: ${item.description} \n" +
-                    "picture: ${item.picture} \n" +
-                    "latitude: ${item.latitude} \n" +
-                    "longitude: ${item.longitude}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val intent = Intent(context, PlaceInfoActivity().javaClass)
+                intent.putExtra("ID", item.id)
+                context?.startActivity(intent)
             })
             newItems.add(newItem)
         }
