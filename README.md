@@ -1,5 +1,5 @@
 # BestPlace
+![Screenshot_20210717_155740](https://user-images.githubusercontent.com/50989480/130445844-cefb9ef0-7281-4d19-ba25-3d768740d3bc.jpg)
 
-![design1](https://user-images.githubusercontent.com/50989480/130445555-7113ecc3-7279-4d9a-acf3-be6f4c5f8a79.png)
 
 
